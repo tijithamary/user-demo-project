@@ -1,0 +1,54 @@
+<html>
+	<head>
+		<title>Users Demo Project</title>
+	</head>
+		<script>
+			function validate(form) {
+				
+    			if(form.username.value == "") {
+					document.getElementById("error").innerText = "Username is empty.";
+					form.username.focus();
+					return false;
+				}
+				
+				if(form.password.value == "") {
+					document.getElementById("error").innerText = "Password is empty.";
+					form.password.focus();
+					return false;
+				}
+			}
+		</script>
+	<body>
+		<h1><i>Users Demo Project!!!</i></h1>
+		
+		<table cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td>
+					<form method="POST" action = "/users/login" onSubmit = "return validate(this);">
+					<fieldset><legend>User's Login</legend>
+					<table cellspacing = "10" cellpadding = "0">
+						<tr><td colspan="2" align="right"><i><font color="red"><p id="error"></p></font></i></td></tr>
+						<tr><td>Username:</td>	<td align="right"><input type="text" width="30" name= "username"/></td></tr>
+						<tr><td>Password:</td>	<td align="right"><input type="password" width="30" name= "password"/></td></tr>
+						<tr><td colspan="2" align="right"><input type="submit" value="Login"/></td></tr>
+						
+					</table>
+					</fieldset>
+					</form>
+				</td>
+				<td>
+					<ul type="circle">
+			    		<li><a href="/signup.html"><i>Sign Up</i></a></li>
+			    		<li><a href="/resetpassword.html"><i>Reset Password</i></a></li>
+					</ul>
+				</td>
+			</tr>
+		<table>
+		
+		<hr/>
+		
+		<center><i>© Copyright 2011-2021 www.mylearning-portal.com. All rights reserved.</i></center>
+		
+	</body>
+
+</html>
