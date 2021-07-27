@@ -4,13 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.demo.user.dataobjects.User;
-import com.demo.user.repositories.UserDBOperations;
+import com.demo.user.repositories.UserJdbcServer;
 
 @Service
 public class UserService {
 
 	@Autowired
-	private UserDBOperations userDb;
+	private UserJdbcServer userJdbc;
 	
 	public String login(String username, String password) throws Exception {
 		
@@ -22,7 +22,7 @@ public class UserService {
 			throw new Exception("Password should be atleast 4 characters length");
 		}
 		
-		boolean success = userDb.login(username, password);
+		boolean success = userJdbc.login(username, password);
 		
 		if(!success) {
 			return "Username or Password is Invalid, Please try again!!!";
@@ -37,14 +37,14 @@ public class UserService {
 		if(username == null || username.isEmpty()) {
 			throw new Exception("Username is Empty. Plz enter the valid username.");
 		}
-		return userDb.findUser(username);
+		return userJdbc.findUser(username);
 	}
 	
 	public User findUserByEmail(String emailid) {
-		return userDb.findUserByEmail(emailid);
+		return userJdbc.findUserByEmail(emailid);
 	}
 	
 	public String createUser(User user) {
-		return userDb.createUser(user);
+		return userJdbc.createUser(user);
 	}
 }
