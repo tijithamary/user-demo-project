@@ -16,7 +16,7 @@ import com.demo.user.utils.DBConstants;
  * This class used for User CRUD operations.
  */
 @Repository
-public class UserDBOperations {
+public class UserJdbcServer {
 	
 	public boolean login(String username, String password) {
 		

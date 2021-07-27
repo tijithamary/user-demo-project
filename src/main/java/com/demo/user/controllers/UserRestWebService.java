@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.demo.user.dataobjects.User;
 import com.demo.user.services.UserService;
+import com.demo.user.utils.Today;
 
 @RestController
 @RequestMapping("users")
@@ -18,12 +19,15 @@ public class UserRestWebService {
 	@Autowired
 	private UserService service;
 	
+	@Autowired
+	private Today today;
+	
 	public UserRestWebService() {
 	}
 
 	@RequestMapping(path = "/home", method = RequestMethod.GET)
-	public String home() {
-		return "It's Home";
+	public String home(@RequestParam(name = "name", required = false, defaultValue = "Guest") String name) {
+		return name + ", " + today.greet() + " Welcome to User's Home";
 	}
 	
 	@RequestMapping(path = "/login", method = RequestMethod.POST)
