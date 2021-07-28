@@ -7,16 +7,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.demo.user.configs.DBConstants;
 import com.demo.user.dataobjects.User;
-import com.demo.user.utils.DBConstants;
 
 /**
  * This class used for User CRUD operations.
  */
 @Repository
 public class UserJdbcServer {
+	
+	@Autowired
+	private DBConstants dbConstents;
 	
 	public boolean login(String username, String password) {
 		
@@ -29,7 +33,7 @@ public class UserJdbcServer {
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			con = DriverManager.getConnection(DBConstants.MYSQL_DB_URL, DBConstants.MYSQL_DB_USER, DBConstants.MYSQL_DB_PASS);
+			con = DriverManager.getConnection(dbConstents.URL, dbConstents.USERNAME, dbConstents.PASSWORD);
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, username);
 			stmt.setString(2, password);
@@ -68,7 +72,7 @@ public class UserJdbcServer {
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			con = DriverManager.getConnection(DBConstants.MYSQL_DB_URL, DBConstants.MYSQL_DB_USER, DBConstants.MYSQL_DB_PASS);
+			con = DriverManager.getConnection(dbConstents.URL, dbConstents.USERNAME, dbConstents.PASSWORD);
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, username);
 			rs = stmt.executeQuery();
@@ -116,7 +120,7 @@ public class UserJdbcServer {
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			con = DriverManager.getConnection(DBConstants.MYSQL_DB_URL, DBConstants.MYSQL_DB_USER, DBConstants.MYSQL_DB_PASS);
+			con = DriverManager.getConnection(dbConstents.URL, dbConstents.USERNAME, dbConstents.PASSWORD);
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, emailid);
 			rs = stmt.executeQuery();
@@ -153,18 +157,17 @@ public class UserJdbcServer {
 		return user;
 	}
 	
-	public String createUser(User user) {
+	public int createUser(User user) {
 		
 		String sql = "insert into users(username, password, firstname, lastname, city, state, country, phone, emailid, zipcode) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		Connection con = null;
 		PreparedStatement stmt = null;
-		boolean success = false;
-		
+		int result = 0;
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			con = DriverManager.getConnection(DBConstants.MYSQL_DB_URL, DBConstants.MYSQL_DB_USER, DBConstants.MYSQL_DB_PASS);
+			con = DriverManager.getConnection(dbConstents.URL, dbConstents.USERNAME, dbConstents.PASSWORD);
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, user.getUsername());
 			stmt.setString(2, user.getPassword());
@@ -176,8 +179,7 @@ public class UserJdbcServer {
 			stmt.setString(8, user.getPhone());
 			stmt.setString(9, user.getEmailid());
 			stmt.setInt(10, user.getZipcode());
-			int result = stmt.executeUpdate();
-			success = (result > 0);
+			result = stmt.executeUpdate();
 		}
 		catch(ClassNotFoundException e) {
 			e.printStackTrace();
@@ -193,29 +195,28 @@ public class UserJdbcServer {
 			catch (Exception e) {
 			}
 		}
-		if (success == true) {
-			return "Successfully created!!!!!";
-		}
-		else {
-			return "Try Again!!!!!!";
-		}
+		
+		return result;
 	}
 	
-//	public static void main(String[] args) {
-//		
-//		User user = new User();
-//		user.setUsername("Ishika");
-//		user.setPassword("ishika2006");
-//		user.setFirstname("Ishika");
-//		user.setLastname("Shadon");
-//		user.setCity("Kuwait");
-//		user.setState("Kuwait");
-//		user.setCountry("Kuwait");
-//		user.setPhone("9994440567");
-//		user.setEmailid("ishika2006@gmail.com");
-//		user.setZipcode(902903);
-//		System.out.println(createUser(user));
-//	}
+	
+	public static void main(String[] args) {
+	
+		UserJdbcServer userJdbc = new UserJdbcServer();
+		User user = new User();
+		user.setUsername("aaa11");
+		user.setPassword("bbb");
+		user.setFirstname("aaa");
+		user.setLastname("bbb");
+		user.setCity("Chennai");
+		user.setState("TN");
+		user.setCountry("India");
+		user.setZipcode(898989);
+		user.setPhone("9349302843");
+		user.setEmailid("aaaa@gmail.com");
+		int id = userJdbc.createUser(user);
+		System.out.println(id);
+	}
 }
 
 

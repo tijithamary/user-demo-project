@@ -1,19 +1,47 @@
 package com.demo.user.dataobjects;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "USERS")
 public class User {
 
+	@Id
+	@Column(name = "ID")
 	private int id;
+	
+	@Column(name = "USERNAME")
 	private String username;
+	
+	@Column(name = "PASSWORD")
 	private String password;
+	
+	@Column(name = "FIRSTNAME")
 	private String firstname;
+	
+	@Column(name = "LASTNAME")
 	private String lastname;
+	
+	@Column(name = "CITY")
 	private String city;
+	
+	@Column(name = "STATE")
 	private String state;
+	
+	@Column(name = "COUNTRY")
 	private String country;
+	
+	@Column(name = "ZIPCODE")
 	private int zipcode;
+	
+	@Column(name = "PHONE")
 	private String phone;
+	
+	@Column(name = "EMAILID")
 	private String emailid;
-	private boolean active;
 	
 	public int getId() {
 		return id;
@@ -107,18 +135,10 @@ public class User {
 		this.emailid = emailid;
 	}
 
-	public boolean getActive() {
-		return active;
-	}
-
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", firstname=" + firstname
 				+ ", lastname=" + lastname + ", city=" + city + ", state=" + state + ", country=" + country
-				+ ", zipcode=" + zipcode + ", phone=" + phone + ", emailid=" + emailid + ", active=" + active + "]";
+				+ ", zipcode=" + zipcode + ", phone=" + phone + ", emailid=" + emailid + "]";
 	}
 }

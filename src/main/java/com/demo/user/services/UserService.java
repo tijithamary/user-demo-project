@@ -5,12 +5,16 @@ import org.springframework.stereotype.Service;
 
 import com.demo.user.dataobjects.User;
 import com.demo.user.repositories.UserJdbcServer;
+import com.demo.user.repositories.UserRepository;
 
 @Service
 public class UserService {
 
 	@Autowired
 	private UserJdbcServer userJdbc;
+	
+	@Autowired
+	private UserRepository userRepository;
 	
 	public String login(String username, String password) throws Exception {
 		
@@ -22,7 +26,8 @@ public class UserService {
 			throw new Exception("Password should be atleast 4 characters length");
 		}
 		
-		boolean success = userJdbc.login(username, password);
+		//boolean success = userJdbc.login(username, password);
+		boolean success = userRepository.login(username, password);
 		
 		if(!success) {
 			return "Username or Password is Invalid, Please try again!!!";
@@ -45,6 +50,15 @@ public class UserService {
 	}
 	
 	public String createUser(User user) {
-		return userJdbc.createUser(user);
+		
+		//int id = userJdbc.createUser(user);
+		int id = userRepository.createUser(user);
+		
+		if(id > 0) {
+			return "Successfully created!!!!!";
+		}
+		else {
+			return "Try Again!!!!!!";
+		}
 	}
 }
